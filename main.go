@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"os"
-	"strings"
 )
 
 func main() {
@@ -14,23 +13,32 @@ func main() {
 		fmt.Print("Filed to open file")
 	}
 
-	strData := string(data)
+	// strData := string(data)
 
-	lines := strings.Split(strData, "\n\n")
+	// lines := strings.Split(strData, "\n\n")
 
-	var givenChars []string
+	// var givenChars []string
 
-	for _, b := range input {
-		givenChars = append(givenChars, lines[b-32])
+	// for _, b := range input {
+	// 	givenChars = append(givenChars, lines[b-32])
+	// }
+
+	// for i := 0; i < len(givenChars); i++ {
+	// 	for j := 0; j < len(givenChars[i]); j++ {
+	// 		if givenChars[i][j] == '\n' {
+	// 			fmt.Print()
+	// 			break
+	// 		}
+	// 		fmt.Print(string(givenChars[i][j]))
+	// 	}
+	// }
+}
+
+func AsciiWord(word string) {
+	for i := range word {
+		AddLine(word[i])
 	}
+}
 
-	for i := 0; i < len(givenChars); i++ {
-		for j := 0; j < len(givenChars[i]); j++ {
-			if givenChars[i][j] == '\n' {
-				fmt.Print()
-				break
-			}
-			fmt.Print(string(givenChars[i][j]))
-		}
-	}
+func AddLine(byte) {
 }
