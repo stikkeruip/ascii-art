@@ -13,10 +13,9 @@ func main() {
 	if err != nil {
 		fmt.Print("Filed to open file")
 	}
+	strData := strings.ReplaceAll(string(data), "\r\n", "\n")
 
-	strData := string(data)
-
-	lines := strings.Split(strData, "\n\n")
+	lines := strings.Split(strData, "\r\n")
 
 	var givenChars []string
 
