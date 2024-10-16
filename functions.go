@@ -30,23 +30,12 @@ func loadBanner(filename string) {
 		return
 	}
 	asciiLines := strings.Split(strings.ReplaceAll(string(data), "\r\n", "\n"), "\n\n")
+	asciiLines[0] = "        \n        \n        \n        \n        \n        \n        \n        "
 	asciiMap = make(map[byte][]string)
 
-	// Manually handle the space character to be 8 empty lines
-	asciiMap[' '] = []string{
-		"        ",
-		"        ",
-		"        ",
-		"        ",
-		"        ",
-		"        ",
-		"        ",
-		"        ",
-	}
-
 	// Create a map for ASCII characters (starting after the space character)
-	for i, art := range asciiLines[1:] { // Start from index 1 to skip space
-		char := byte(33 + i) // ASCII starts at 33 after space
+	for i, art := range asciiLines { // Start from index 1 to skip space
+		char := byte(32 + i) // ASCII starts at 33 after space
 		asciiMap[char] = strings.Split(art, "\n")
 	}
 }
@@ -96,8 +85,7 @@ func buildAsciiArt(line string) [][]string {
 
 // Print the ASCII art for the given characters
 func printAsciiArt(asciiChars [][]string) {
-	maxLines := 8 // Assuming each character has 8 lines
-	for i := 0; i < maxLines; i++ {
+	for i := 0; i < 8; i++ {
 		for _, charLines := range asciiChars {
 			fmt.Print(charLines[i]) // Print each line of each character
 			// fmt.Print(" ")          // Add a space between characters
