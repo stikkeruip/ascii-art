@@ -10,6 +10,7 @@ import (
 const (
 	asciiStart = 32
 	asciiEnd   = 126
+	charHeight = 8
 )
 
 func main() {
@@ -21,39 +22,33 @@ func main() {
 
 	input := os.Args[1]
 
-	// Check if the input is empty or only whitespace
-	if len(strings.TrimSpace(input)) == 0 {
-		fmt.Println("Input is empty. Nothing to display.")
-		return
-	}
-
-	// Replace '\n' with actual newline characters
+	// replace '\n' with actual newline characters
 	input = strings.ReplaceAll(input, `\n`, "\n")
 
-	// Load the ascii font from the file
+	// load the ascii font from the file
 	asciiChars, err := loadFont("standard.txt")
 	if err != nil {
 		log.Fatalf("Failed to load font: %v", err)
 	}
 
-	// Create a map of ascii characters to their corresponding art
+	// create a map of ascii characters to their corresponding art
 	asciiMap := createAsciiMap(asciiChars)
 
-	// Split the input string into lines based on newlines
+	// split the input string into lines based on newlines
 	inputLines := strings.Split(input, "\n")
 	for idx, inputLine := range inputLines {
 		if inputLine == "" {
-			// Empty line due to consecutive '\n', print a newline
+			// empty line due to consecutive '\n', print a newline
 			fmt.Println()
 			continue
 		}
 
 		// find what art is needed from input
 		givenChars := buildAsciiArt(inputLine, asciiMap)
-		//print ascii art
+		// print ascii art
 		printAsciiArt(givenChars)
 
-		// Print a newline after each line
+		// print a newline after each line, except the last one
 		if idx < len(inputLines)-1 {
 			fmt.Println()
 		}
@@ -67,6 +62,13 @@ func loadFont(filePath string) ([]string, error) {
 		return nil, err
 	}
 	strData := strings.ReplaceAll(string(data), "\r\n", "\n")
+
+	// check if the first character in the file is a newline and skip it if necessary
+	if len(strData) > 0 && strData[0] == '\n' {
+		strData = strData[1:]
+	}
+
+	// now split by double newline to separate each character representation
 	asciiChars := strings.Split(strData, "\n\n")
 	return asciiChars, nil
 }
@@ -85,7 +87,7 @@ func createAsciiMap(asciiChars []string) map[rune][]string {
 func buildAsciiArt(line string, asciiMap map[rune][]string) [][]string {
 	var givenChars [][]string
 	for _, b := range line {
-		// Check if an ascii value in the txt file
+		// check if an ascii value in the txt file
 		if b < asciiStart || b > asciiEnd {
 			continue
 		}
@@ -99,28 +101,21 @@ func buildAsciiArt(line string, asciiMap map[rune][]string) [][]string {
 	return givenChars
 }
 
-// printAsciiArt prints the ascii art for the given characters line by line
+// prints the ascii art for the given characters line by line
 func printAsciiArt(givenChars [][]string) {
-	maxLines := getMaxLines(givenChars)
-	for lineIndex := 0; lineIndex < maxLines; lineIndex++ {
-		for _, charLines := range givenChars {
-			// Print the current line of each character if it exists
-			if lineIndex < len(charLines) {
-				fmt.Print(charLines[lineIndex])
-			}
-			fmt.Print(" ") // Adjust spacing
-		}
-		fmt.Println()
-	}
-}
+	for lineIndex := 0; lineIndex < charHeight; lineIndex++ {
+		lineContent := ""
 
-// calculates the maximum number of lines in the given characters
-func getMaxLines(givenChars [][]string) int {
-	maxLines := 0
-	for _, charLines := range givenChars {
-		if len(charLines) > maxLines {
-			maxLines = len(charLines)
+		for _, charLines := range givenChars {
+			// append the current line of each character if it exists, else add empty line
+			if lineIndex < len(charLines) {
+				lineContent += charLines[lineIndex]
+			} else {
+				lineContent += "    " // handle space or missing lines
+			}
+			lineContent += " " // adjust spacing
 		}
+
+		fmt.Println(lineContent)
 	}
-	return maxLines
 }
