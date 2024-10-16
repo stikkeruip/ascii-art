@@ -4,19 +4,15 @@ import (
 	"os"
 )
 
-var asciiLines []string
-var output []string
-
 func main() {
-
+	// Check validity
 	if !checkValidity() {
 		return
 	}
 
-	// Then we load the appropriate banner to memory, in the form of lines
-
+	// Load the banner (ASCII art)
 	loadBanner("standard.txt")
 
-	// Then we print
+	// Process the input string
 	processString(os.Args[1])
 }
