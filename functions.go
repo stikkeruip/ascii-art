@@ -7,7 +7,7 @@ import (
 	"unicode"
 )
 
-var asciiMap map[rune][]string
+var asciiMap map[byte][]string
 
 // Check the validity of the input
 func checkValidity() bool {
@@ -30,7 +30,7 @@ func loadBanner(filename string) {
 		return
 	}
 	asciiLines := strings.Split(strings.ReplaceAll(string(data), "\r\n", "\n"), "\n\n")
-	asciiMap = make(map[rune][]string)
+	asciiMap = make(map[byte][]string)
 
 	// Manually handle the space character to be 8 empty lines
 	asciiMap[' '] = []string{
@@ -46,7 +46,7 @@ func loadBanner(filename string) {
 
 	// Create a map for ASCII characters (starting after the space character)
 	for i, art := range asciiLines[1:] { // Start from index 1 to skip space
-		char := rune(33 + i) // ASCII starts at 33 after space
+		char := byte(33 + i) // ASCII starts at 33 after space
 		asciiMap[char] = strings.Split(art, "\n")
 	}
 }
@@ -87,17 +87,8 @@ func processString(input string) {
 // Build the ASCII art for a given line of input
 func buildAsciiArt(line string) [][]string {
 	var asciiChars [][]string
-	for _, char := range line {
-		// Handle space character
-		if char == ' ' {
-			asciiChars = append(asciiChars, asciiMap[' '])
-			continue
-		}
+	for _, char := range []byte(line) { // Use byte slice to process the input
 
-		// Skip characters not in the ASCII range
-		if char < 32 || char > 126 {
-			continue
-		}
 		asciiChars = append(asciiChars, asciiMap[char])
 	}
 	return asciiChars
