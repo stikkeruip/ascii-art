@@ -15,21 +15,29 @@ func main() {
 	}
 	strData := strings.ReplaceAll(string(data), "\r\n", "\n")
 
-	lines := strings.Split(strData, "\r\n")
+	lines := strings.Split(strData, "\n\n")
 
-	var givenChars []string
+	var givenChars [][]string
 
 	for _, b := range input {
-		givenChars = append(givenChars, lines[b-32])
+		charLines := strings.Split(lines[b-32], "\n")
+		givenChars = append(givenChars, charLines)
 	}
 
-	for i := 0; i < len(givenChars); i++ {
-		for j := 0; j < len(givenChars[i]); j++ {
-			if givenChars[i][j] == '\n' {
-				fmt.Print()
-				break
-			}
-			fmt.Print(string(givenChars[i][j]))
+	maxLines := 0
+	for _, charLines := range givenChars {
+		if len(charLines) > maxLines {
+			maxLines = len(charLines)
 		}
+	}
+
+	for lineIndex := 0; lineIndex < maxLines; lineIndex++ {
+		for _, charLines := range givenChars {
+			if lineIndex < len(charLines) {
+				fmt.Print(charLines[lineIndex])
+			}
+			fmt.Print(" ")
+		}
+		fmt.Println()
 	}
 }
