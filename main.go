@@ -5,6 +5,7 @@ import (
 )
 
 var asciiLines []string
+var output []string
 
 func main() {
 

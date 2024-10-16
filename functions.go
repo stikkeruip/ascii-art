@@ -34,11 +34,15 @@ func loadBanner(filename string) {
 }
 
 func drawWord(word string) {
-	output := make([]string, 8)
 
 	for _, char := range word {
 		asciiValue := int(char)
 		startIndex := (asciiValue-32)*9 + 1
+
+		// If output is empty, initialize it with 8 empty strings
+		if len(output) == 0 {
+			output = make([]string, 8)
+		}
 
 		for i := 0; i < 8; i++ {
 			output[i] += asciiLines[startIndex+i]
@@ -49,6 +53,8 @@ func drawWord(word string) {
 	for _, line := range output {
 		fmt.Println(line)
 	}
+
+	fmt.Println(contentEntire)
 }
 
 // func isNotASCII checks if every rune of an arguments is within the ASCII range.
