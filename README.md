@@ -42,7 +42,7 @@ D --> 1[Output in the terminal]
 
 1.  **Clone the repository**:
       
-    `git clone https://github.com/yourusername/ascii-art-generator.git` 
+    `git clone https://platform.zone01.gr/git/ustikker/ascii-art.git` 
     
 2.  **Navigate to the project directory**:
     
