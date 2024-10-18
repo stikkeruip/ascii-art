@@ -52,16 +52,12 @@ D --> 1[Output in the terminal]
 
 	 `go build -o asciiart` 
     
-    This will create an executable named `asciiart`.
+    This will create an executable named `asciiart`. Note that this is for Unix based systems. If you are using Windows, please use `asciiart.exe` instead. The same applies to the following sections as well.
     
 
 ## Usage
 
 Run the program by providing a single argument enclosed in quotes:
-
-bash
-
-Copy code
 
 `./asciiart "Your text here"` 
 
