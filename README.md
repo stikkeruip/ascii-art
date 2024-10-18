@@ -131,7 +131,7 @@ The program only supports standard ASCII characters. If you input characters out
 
 `go test` 
 
-This will execute the tests defined in `main_test.go` and confirm that all features are working as expected. Please note that these tests are designed to run with the default option of *standard.txt* banner
+This will execute the tests defined in `main_test.go` and confirm that all features are working as expected. Please note that these tests are designed to run with the default option of *standard.txt* banner.
 
 ## Learning Points
 
